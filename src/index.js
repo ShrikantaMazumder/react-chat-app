@@ -4,9 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
