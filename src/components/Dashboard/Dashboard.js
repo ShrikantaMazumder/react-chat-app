@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import './Dashboard.css';
+import { Button, withStyles } from '@material-ui/core';
+import styles from './styles.js';
 import ChatList from '../ChatList/ChatList';
 import firebase from 'firebase';
+import ChatView from '../ChatView/ChatView.js';
 
-const Dashboard = (props) => {
+const Dashboard = ( props) => {
   const  [chat, setChat] = useState({
     selectedChat: null,
     newChatFormVisible: false,
     email: null,
     chats: [],
   });
+  const { classes } = props;
 
   useEffect(()=>{
     firebase.auth().onAuthStateChanged(async _usr => {
@@ -34,8 +37,7 @@ const Dashboard = (props) => {
   },[]);
 
   const selectChat = (chatIndex) => {
-    console.log('Selected a chat');
-    
+    setChat( {...chat, selectedChat: chatIndex});    
   }
 
   const newChatBtnClicked = () => {
@@ -43,16 +45,32 @@ const Dashboard = (props) => {
     
   }
 
+  // SignOut function
+  const signOut = () => {
+    firebase.auth().signOut();
+  }
+
   return (
+    <div>
       <ChatList 
         history={props.history} 
         newChatBtn={newChatBtnClicked} 
-        selectChat={selectChat}
+        selectChatFn={selectChat}
         chats={chat.chats}
         userEmail={chat.email}
-        selectedChatIndex={selectChat}
-        />
+        selectedChatIndex={chat.selectedChat}
+      />
+
+      {
+        chat.newChatFormVisible ? 
+        null :
+        <ChatView user={chat.email} chat={chat.chats[chat.selectedChat]} />
+      }
+      
+
+      <Button className={classes.signOutBtn} onClick={signOut} > Sign Out </Button>
+    </div>
   );
 }
 
-export default Dashboard;
+export default withStyles(styles)(Dashboard);

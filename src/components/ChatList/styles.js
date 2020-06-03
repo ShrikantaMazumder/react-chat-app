@@ -1,6 +1,6 @@
 const styles = theme => ({
   root: {
-    backgroundColor: theme.background.paper,
+    backgroundColor: theme.palette.background.paper,
     height: 'calc(100% - 35px)',
     position: 'absolute',
     left: '0',
@@ -19,5 +19,6 @@ const styles = theme => ({
     top: '0',
     right: '5px'
   }
-})
+});
+
 export default styles;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { withStyles, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, Divider, Button, ListItemIcon } from '@material-ui/core';
 import NotificationImportant from '@material-ui/icons';
-import styles from '../Login/styles';
+import styles from './styles';
 
 
-const ChatList = ({ classes, chats, selectedChatIndex, userEmail }) => {
+const ChatList = ({ classes, chats, selectedChatIndex, userEmail, selectChatFn }) => {
   
 
   const newChat = () => {
@@ -12,12 +12,12 @@ const ChatList = ({ classes, chats, selectedChatIndex, userEmail }) => {
   }
 
   const selectChat = (index) => {
-    console.log('Select chat', index);
+    selectChatFn(index);
   }
   
   if (chats.length > 0) {
     return (
-      <main className={classes.root}>
+      <div className={classes.root}>
         <Button 
           variant='contained' 
           fullWidth 
@@ -60,22 +60,20 @@ const ChatList = ({ classes, chats, selectedChatIndex, userEmail }) => {
             })
           }
         </List>
-      </main>
+      </div>
     );
   } else {
     return (
-      <main className={classes.root}>
-        <Button 
-          variant='contained' 
-          fullWidth 
-          color='primary' 
-          className={classes.newChatBtn}
-          onClick={newChat}
-          >
-            New Message
-        </Button>
-        <List></List>
-      </main>
+      <div className={classes.root}>
+          <Button variant="contained" 
+            fullWidth 
+            color='primary' 
+            onClick={newChat} 
+            className={classes.newChatBtn}>
+              New Message
+          </Button>
+          <List></List>
+        </div>
     );
   }
 }
